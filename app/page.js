@@ -6,7 +6,7 @@ export default function Home() {
       
       <div className="mb-8">
         <Image
-          src="/logo.webp"
+          src="/logo.png"
           alt="Shri Sainath Homoeopathic Pharmacy"
           width={260}
           height={260}
