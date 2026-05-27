@@ -1,124 +1,234 @@
-import medicines from "../data/medicines";
+"use client";
+
+import { useState } from "react";
 
 export default function Home() {
-  const popularMedicines = medicines.filter(
-    (medicine) => medicine.popular
+  const medicines = [
+    {
+      id: 1,
+      name: "Belladonna 30",
+      brand: "SBL",
+      price: 120,
+      image: "/images/belladonna.webp",
+    },
+    {
+      id: 2,
+      name: "Arnica Montana 30",
+      brand: "SBL",
+      price: 110,
+      image: "/images/arnica.webp",
+    },
+    {
+      id: 3,
+      name: "Rhus Tox 30",
+      brand: "SBL",
+      price: 95,
+      image: "/images/rhus.webp",
+    },
+    {
+      id: 4,
+      name: "Nux Vomica 30",
+      brand: "SBL",
+      price: 140,
+      image: "/images/nux.webp",
+    },
+  ];
+
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (medicine) => {
+    const existing = cart.find((item) => item.id === medicine.id);
+
+    if (existing) {
+      setCart(
+        cart.map((item) =>
+          item.id === medicine.id
+            ? { ...item, qty: item.qty + 1 }
+            : item
+        )
+      );
+    } else {
+      setCart([...cart, { ...medicine, qty: 1 }]);
+    }
+  };
+
+  const increaseQty = (id) => {
+    setCart(
+      cart.map((item) =>
+        item.id === id
+          ? { ...item, qty: item.qty + 1 }
+          : item
+      )
+    );
+  };
+
+  const decreaseQty = (id) => {
+    setCart(
+      cart
+        .map((item) =>
+          item.id === id
+            ? { ...item, qty: item.qty - 1 }
+            : item
+        )
+        .filter((item) => item.qty > 0)
+    );
+  };
+
+  const total = cart.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0
   );
 
   return (
-    <main className="min-h-screen bg-[#b7d9d4]">
-
+    <main className="min-h-screen bg-[#c4dfdc]">
       {/* Header */}
-      <header className="bg-teal-800 text-white px-5 py-4 shadow-md sticky top-0 z-50">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-xl font-bold">
-              SHRI SAINATH
-            </h1>
-            <p className="text-sm text-teal-100">
-              Homoeopathic Pharmacy
-            </p>
-          </div>
-
-          <button className="bg-white text-teal-800 px-4 py-2 rounded-xl font-medium shadow">
-            Cart (0)
-          </button>
+      <div className="bg-teal-800 text-white p-5 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold">
+            SHRI SAINATH
+          </h1>
+          <p className="text-lg">
+            Homoeopathic Pharmacy
+          </p>
         </div>
 
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Search medicine..."
-            className="w-full p-3 rounded-xl text-black outline-none"
-          />
+        <div className="bg-white text-teal-800 px-5 py-3 rounded-2xl text-xl font-semibold shadow">
+          Cart ({cart.length})
         </div>
-      </header>
+      </div>
 
-      {/* Hero Section */}
-      <section className="text-center py-12 px-5">
-        <h2 className="text-5xl font-bold text-teal-800">
-          SHRI SAINATH
-        </h2>
-
-        <h3 className="text-2xl text-teal-700 mt-2">
-          HOMOEOPATHIC PHARMACY
-        </h3>
-
-        <p className="mt-6 text-gray-700 text-lg">
-          Trusted Homoeopathic Medicines
-        </p>
-
-        <button className="mt-8 bg-teal-700 text-white px-6 py-3 rounded-xl shadow-lg">
-          WhatsApp Order
-        </button>
-      </section>
+      {/* Search */}
+      <div className="p-4">
+        <input
+          type="text"
+          placeholder="Search medicine..."
+          className="w-full p-4 rounded-2xl text-lg shadow outline-none"
+        />
+      </div>
 
       {/* Brands */}
-      <section className="px-5 mb-10">
-        <h2 className="text-2xl font-bold text-teal-900 mb-4">
+      <div className="px-4">
+        <h2 className="text-4xl font-bold text-teal-900 mb-5">
           Brands
         </h2>
 
-        <div className="flex gap-3 overflow-x-auto pb-2">
-          {["SBL", "Wheezal", "Reckeweg", "Bakson"].map((brand) => (
+        <div className="flex gap-4 overflow-auto pb-3">
+          {[
+            "SBL",
+            "Wheezal",
+            "Reckeweg",
+            "Bakson",
+            "Dr Reckeweg",
+          ].map((brand) => (
             <div
               key={brand}
-              className="bg-white px-5 py-3 rounded-xl shadow whitespace-nowrap"
+              className="bg-white px-8 py-5 rounded-3xl shadow text-2xl whitespace-nowrap"
             >
               {brand}
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* Popular Medicines */}
-      <section className="px-5 pb-24">
-        <h2 className="text-2xl font-bold text-teal-900 mb-5">
+      {/* Medicines */}
+      <div className="p-4">
+        <h2 className="text-4xl font-bold text-teal-900 mb-5">
           Popular Medicines
         </h2>
 
-        <div className="grid grid-cols-2 gap-4">
-          {popularMedicines.map((medicine) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {medicines.map((medicine) => (
             <div
               key={medicine.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden"
+              className="bg-white rounded-3xl shadow-lg overflow-hidden"
             >
               <img
                 src={medicine.image}
                 alt={medicine.name}
-                className="w-full h-40 object-contain bg-gray-100"
+                className="w-full h-44 object-cover"
               />
 
-              <div className="p-3">
-                <span className="text-xs bg-teal-100 text-teal-800 px-2 py-1 rounded-lg">
+              <div className="p-4">
+                <span className="bg-teal-100 px-3 py-1 rounded-full text-sm">
                   {medicine.brand}
                 </span>
 
-                <h3 className="font-semibold mt-2 text-gray-800">
+                <h3 className="font-bold text-lg mt-3">
                   {medicine.name}
                 </h3>
 
-                <p className="text-lg font-bold text-teal-800 mt-2">
+                <p className="text-2xl font-bold text-teal-800 mt-2">
                   ₹{medicine.price}
                 </p>
 
-                <button className="w-full mt-3 bg-teal-700 text-white py-2 rounded-xl">
+                <button
+                  onClick={() => addToCart(medicine)}
+                  className="w-full mt-4 bg-teal-700 text-white py-3 rounded-2xl text-lg font-semibold"
+                >
                   Add to Cart
                 </button>
               </div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* WhatsApp Floating Button */}
-      <a
-        href="https://wa.me/"
-        className="fixed bottom-5 right-5 bg-green-500 text-white px-5 py-3 rounded-full shadow-xl"
-      >
-        WhatsApp
-      </a>
+      {/* Cart */}
+      {cart.length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white p-4 rounded-t-3xl shadow-2xl">
+          <h2 className="text-2xl font-bold mb-3">
+            Cart Items
+          </h2>
 
+          {cart.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center mb-3"
+            >
+              <div>
+                <h3 className="font-semibold">
+                  {item.name}
+                </h3>
+                <p>₹{item.price}</p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() =>
+                    decreaseQty(item.id)
+                  }
+                  className="bg-red-500 text-white px-3 py-1 rounded-full"
+                >
+                  -
+                </button>
+
+                <span className="font-bold">
+                  {item.qty}
+                </span>
+
+                <button
+                  onClick={() =>
+                    increaseQty(item.id)
+                  }
+                  className="bg-green-600 text-white px-3 py-1 rounded-full"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <div className="flex justify-between items-center mt-4">
+            <h2 className="text-2xl font-bold">
+              Total: ₹{total}
+            </h2>
+
+            <button className="bg-green-600 text-white px-6 py-3 rounded-2xl text-lg font-semibold">
+              Order on WhatsApp
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
