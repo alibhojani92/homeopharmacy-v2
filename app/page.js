@@ -228,6 +228,61 @@ export default function Home() {
             </button>
           </div>
         </div>
+{/* Place Order Section */}
+<div className="bg-white rounded-3xl p-5 shadow-lg mt-6 mx-4 mb-10">
+  <h2 className="text-3xl font-bold text-teal-800 mb-4">
+    Place Order
+  </h2>
+
+  <input
+    type="text"
+    placeholder="Full Name"
+    className="w-full p-3 rounded-xl border mb-3 outline-none"
+  />
+
+  <input
+    type="tel"
+    placeholder="Mobile Number"
+    className="w-full p-3 rounded-xl border mb-3 outline-none"
+  />
+
+  <textarea
+    placeholder="Full Address"
+    className="w-full p-3 rounded-xl border mb-3 outline-none h-24"
+  />
+
+  <div className="flex gap-2 mb-4">
+    <input
+      type="text"
+      placeholder="Coupon Code"
+      className="flex-1 p-3 rounded-xl border outline-none"
+    />
+    <button className="bg-teal-700 text-white px-4 rounded-xl">
+      Apply
+    </button>
+  </div>
+
+  <div className="mb-4">
+    <p className="font-semibold text-lg mb-2">
+      Payment Method
+    </p>
+
+    <div className="flex gap-3">
+      <button className="bg-green-100 px-4 py-2 rounded-xl border">
+        COD
+      </button>
+
+      <button className="bg-blue-100 px-4 py-2 rounded-xl border">
+        Online Payment
+      </button>
+    </div>
+  </div>
+
+  <button className="w-full bg-green-500 text-white py-4 rounded-2xl text-xl font-semibold">
+    Order on WhatsApp
+  </button>
+</div>
+
       )}
     </main>
   );
