@@ -317,7 +317,6 @@ export default function Home() {
     Order on WhatsApp
   </button>
 </div>
-
-      
-    </main>
+</main>
+  );
 }
