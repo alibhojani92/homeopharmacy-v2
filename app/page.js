@@ -315,7 +315,7 @@ export default function Home() {
   </div>
 
   <button className="w-full bg-green-500 text-white py-4 rounded-2xl text-xl font-semibold">
-    Order on WhatsApp
+Place Order
   </button>
 </div>
 </main>
