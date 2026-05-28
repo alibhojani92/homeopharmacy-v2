@@ -2,6 +2,29 @@
 
 import { useState } from "react";
 
+async function placeOrder(orderData) {
+  try {
+    const response = await fetch("/api/place-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert("Order Placed Successfully!");
+    } else {
+      alert("Failed to place order");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  }
+}
+
 export default function Home() {
   const medicines = [
     {
@@ -230,11 +253,22 @@ export default function Home() {
         </div>
 )}
 {/* Place Order Section */}
-<div className="bg-white rounded-3xl p-5 shadow-lg mt-6 mx-4 mb-10">
-  <h2 className="text-3xl font-bold text-teal-800 mb-4">
-    Place Order
-  </h2>
-
+<button
+  onClick={() =>
+    placeOrder({
+      customer_name: name,
+      mobile,
+      address,
+      medicines: cart,
+      total,
+      payment_method: paymentMethod,
+      coupon_code: coupon,
+    })
+  }
+  className="bg-green-500 text-white w-full py-4 rounded-2xl text-2xl font-bold"
+>
+  Place Order
+</button>
   <input
     type="text"
     placeholder="Full Name"

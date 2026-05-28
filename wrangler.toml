@@ -1,0 +1,7 @@
+name = "homeopharmacy-v2"
+compatibility_date = "2026-05-28"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "homeopharmacy-db"
+database_id = "15baffc2-85df-4c78-b56d-1a841d31cff0"
