@@ -253,6 +253,7 @@ export default function Home() {
         </div>
 )}
 {/* Place Order Section */}
+<div className="bg-white rounded-3xl p-5 shadow-lg mt-6 mx-4 mb-10">
 <button
   onClick={() =>
     placeOrder({
